@@ -18,14 +18,13 @@ const userSignUpValidationRules = () => {
 			.withMessage('Last name can only contain letters'),
 		body('password')
 			.not()
-			.isEmpty({ ignore_whitespace: true })
+			.isEmpty()
 			.withMessage('Password is required')
 			.matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/, 'i')
 			.withMessage('Password must contain at least one uppercase letter, one lowercase letter and one numeric digit')
-			.trim()
 			.isLength({ min: 8 })
 			.withMessage('Password must have at least 8 characters'),
-		body('confirmPassword', 'Passwords do not match')
+		body('passwordConfirm', 'Passwords do not match')
 			.exists()
 			.custom((value, { req }) => value === req.body.password),
 	];
