@@ -7,7 +7,7 @@ const mongoDbUrl = config.MONGODB_URI;
 module.exports = async () => {
     try {
         const connected = await mongoose.connect(
-            'mongodb://127.0.0.1:27017/podcast-management', 
+            mongoDbUrl, 
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,

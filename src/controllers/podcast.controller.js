@@ -5,8 +5,6 @@ const uploadPodcast = async (req, res) => {
     try {
         const { _id } = req.user, { title, description, tag, dateCreated } = req.body;
         const file = req.file && req.file.path;
-        console.log(req.file);
-        // console.log(req.file.path);
         if (!file) {
             return res.status(422).json({
                 status: '422 Error',
@@ -23,7 +21,7 @@ const uploadPodcast = async (req, res) => {
             title,
             description,
             tag,
-            file,
+            file: req.file.path,
             dateCreated,
         });
         const createdPodCast = await podcast.save();

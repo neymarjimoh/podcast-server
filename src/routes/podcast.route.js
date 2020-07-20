@@ -1,5 +1,4 @@
 const express = require("express");
-const multer = require('multer');
 const podCastRouter = express.Router();
 const { checkToken, verifyAdmin } = require('../middlewares/checkAuth');
 const { 
@@ -10,11 +9,10 @@ const {
     viewAPodcast,
     searchPodcasts,
 }  = require('../controllers/podcast.controller');
-const { storage, fileFilter } = require('../helpers/multer');
-const { podcastValidation, validate } = require('../validation/podcast.validation');
+const upload = require('../helpers/multer');
 
 // A logged in user can upload a podcast
-podCastRouter.post('/upload', checkToken, uploadPodcast);
+podCastRouter.post('/upload', checkToken, upload.single('file'), uploadPodcast);
 
 // only admin can modify podcast
 podCastRouter.patch('/:podcastId', checkToken, verifyAdmin, modifyPodcast);
