@@ -7,9 +7,7 @@ const {
     validate,
 } = require('../validation/auth.validation');
 
-authRoute.post('/user/signup', userSignUpValidationRules(), validate, create);
-authRoute.post('/user/login', userSignInValidationRules(), validate, login);
-authRoute.post('/admin/signup', userSignUpValidationRules(), validate, create);
-authRoute.post('/admin/login', userSignInValidationRules(), validate, login);
+authRoute.post('/signup', userSignUpValidationRules(), validate, create);
+authRoute.post('/login', userSignInValidationRules(), validate, login);
 
 module.exports = authRoute;

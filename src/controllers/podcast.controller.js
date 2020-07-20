@@ -123,11 +123,64 @@ const viewAllPodcasts = async (req, res) => {
             currentPage: page
         });
     } catch (err) {
-        console.error('Error from deleting podcast', err);
+        console.error('Error from getting all podcasts', err);
         return res.status(500).json({
             status: '500 Error',
             message: 'Unable to process your request. Try again',
         }); 
+    }
+};
+
+const viewAPodcast = async (req, res) => {
+    try {
+        const { podcastId } = req.params;
+        const podcast = await Podcast.findById(podcastId);
+        if (!podcast) {
+            return res.status(404).json({
+                status: '404 Error',
+                message: 'Podcast doesn\'t exist or has been deleted',
+            });
+        }
+        return res.status(200).json({
+            status: '200 OK',
+            message: 'Podcasts fetched',
+            podcast,
+        });
+    } catch (error) {
+        console.error('Error from getting a podcast', err);
+        return res.status(500).json({
+            status: '500 Error',
+            message: 'Unable to process your request. Try again',
+        });
+    }
+};
+const searchPodcasts = async (req, res) => {
+    try {
+        const { title } = req.query;
+        if (!title) {
+            return res.status(400).json({
+                status: '400 Error',
+                message: 'No search parameter provided',
+            });
+        }
+        const results = await Podcast.find({ title: { $regex: title } });
+        if (results.length === 0) {
+            return res.status(404).json({
+                status: '404 Error',
+                message: 'No podcast with that title found',
+            });
+        }
+        return res.status(200).json({
+            status: '200 OK',
+            message: 'Podcasts fetched',
+            results,
+        });
+    } catch (error) {
+        console.error('Error from searching for a podcast', err);
+        return res.status(500).json({
+            status: '500 Error',
+            message: 'Unable to process your request. Try again',
+        });
     }
 };
 
@@ -136,4 +189,6 @@ module.exports = {
     modifyPodcast,
     deletePodcast,
     viewAllPodcasts,
+    viewAPodcast,
+    searchPodcasts,
 };
