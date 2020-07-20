@@ -19,7 +19,7 @@ const upload = multer({
 });
 
 // A logged in user can upload a podcast
-podCastRouter.post('/upload', checkToken, podcastValidation(), validate, upload.single('file'), uploadPodcast);
+podCastRouter.post('/upload', checkToken, upload.single('file'), uploadPodcast);
 
 // only admin can modify podcast
 podCastRouter.patch('/:podcastId', checkToken, verifyAdmin, modifyPodcast);

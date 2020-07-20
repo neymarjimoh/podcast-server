@@ -3,13 +3,25 @@ const mongoose = require('mongoose');
 const { Types: { ObjectId } } = mongoose;
 const uploadPodcast = async (req, res) => {
     try {
-        const { _id } = req.user, { title, description, tag, file, dateCreated } = req.body;
-        const fileName = req.file && req.file.path;
+        const { _id } = req.user, { title, description, tag, dateCreated } = req.body;
+        const file = req.file && req.file.path;
+        if (!file) {
+            return res.status(422).json({
+                status: '422 Error',
+                message: 'No podcast file provided',
+            });
+        }
+        if (!title && !description) {
+            return res.status(422).json({
+                status: '422 Error',
+                message: 'Ensure you enter both title and description',
+            });
+        }
         const podcast = new Podcast({
             title,
             description,
             tag,
-            file: fileName,
+            file,
             dateCreated,
         });
         const createdPodCast = await podcast.save();

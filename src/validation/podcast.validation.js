@@ -3,11 +3,11 @@ const podcastValidation = () => {
 	return [
 		body('title')
 			.not()
-			.isEmpty({ ignore_whitespace: true })
+			.isEmpty()
 			.withMessage('Title is required'),
 		body('description')
 			.not()
-			.isEmpty({ ignore_whitespace: true })
+			.isEmpty()
 			.withMessage('Podcast description is required')
 			.trim()
 			.isLength({ min: 8 })
