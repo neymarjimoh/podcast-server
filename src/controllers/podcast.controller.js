@@ -73,7 +73,67 @@ const modifyPodcast = async (req, res) => {
     }
 };
 
+const deletePodcast = async (req, res) => {
+    try {
+        const { podcastId } = req.params;
+        if (!ObjectId.isValid(podcastId) || ObjectId.isValid(podcastId) !== true) {
+            return res.status(422).json({
+                status: '422 Error',
+                message: 'Invalid mongoose Id',
+            });
+        }
+        const deletedPodcast = await Podcast.findByIdAndRemove(podcastId);
+        if (!deletedPodcast) {
+            return res.status(404).json({
+                status: '404 Error',
+                message: 'Podcast doesn\'t exist or has been deleted',
+            });
+        }
+        return res.status(200).json({
+            status: '200 OK',
+            message: 'Podcast has been deleted successfully',
+        });
+    } catch (error) {
+        console.log('Error from deleting podcast', error);
+        return res.status(500).json({
+            status: '500 Error',
+            message: 'Unable to process your request. Try again',
+        });
+    }
+};
+
+const viewAllPodcasts = async (req, res) => {
+        // destructure page and limit and set default values
+    const { page = 1, limit = 10 } = req.query;
+
+    try {
+        // execute query with page and limit values
+        const podcasts = await Podcast.find()
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .exec();
+
+        // get total documents in the Posts collection 
+        const count = await Podcast.countDocuments();
+
+        // return response with posts, total pages, and current page
+        return res.status(200).json({
+            podcasts,
+            totalPages: Math.ceil(count / limit),
+            currentPage: page
+        });
+    } catch (err) {
+        console.error('Error from deleting podcast', err);
+        return res.status(500).json({
+            status: '500 Error',
+            message: 'Unable to process your request. Try again',
+        }); 
+    }
+};
+
 module.exports = {
     uploadPodcast,
     modifyPodcast,
+    deletePodcast,
+    viewAllPodcasts,
 };

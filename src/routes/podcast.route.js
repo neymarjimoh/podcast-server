@@ -5,6 +5,8 @@ const { checkToken, verifyAdmin } = require('../middlewares/checkAuth');
 const { 
     uploadPodcast, 
     modifyPodcast,
+    deletePodcast,
+    viewAllPodcasts,
 }  = require('../controllers/podcast.controller');
 const { storage, fileFilter } = require('../helpers/multer');
 const { podcastValidation, validate } = require('../validation/podcast.validation');
@@ -19,5 +21,11 @@ podCastRouter.post('/upload', checkToken, podcastValidation(), validate, upload.
 
 // only admin can modify podcast
 podCastRouter.patch('/:podcastId', checkToken, verifyAdmin, modifyPodcast);
+
+// only admin can delete podcastValidation
+podCastRouter.delete('/:podcastId', checkToken, verifyAdmin,  deletePodcast);
+
+// only admins view all podcasts
+podCastRouter.get('/', checkToken, verifyAdmin, viewAllPodcasts) 
 
 module.exports = podCastRouter;
