@@ -1,0 +1,40 @@
+{
+  "name": "podcast-backend",
+  "version": "1.0.0",
+  "description": "A simple podcast management application",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neymarjimoh/podcast-server.git"
+  },
+  "keywords": [
+    "Podcast",
+    "Rest",
+    "API",
+    "nodejs",
+    "backend",
+    "application",
+    "management"
+  ],
+  "author": "Jimoh Rildwan .A. <neymarjimoh>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neymarjimoh/podcast-server/issues"
+  },
+  "homepage": "https://github.com/neymarjimoh/podcast-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.25",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
