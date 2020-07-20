@@ -1,11 +1,11 @@
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const podcastValidation = () => {
 	return [
-		body('title')
+		check('title')
 			.not()
 			.isEmpty()
 			.withMessage('Title is required'),
-		body('description')
+		check('description')
 			.not()
 			.isEmpty()
 			.withMessage('Podcast description is required')

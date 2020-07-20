@@ -13,13 +13,8 @@ const {
 const { storage, fileFilter } = require('../helpers/multer');
 const { podcastValidation, validate } = require('../validation/podcast.validation');
 
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter
-});
-
 // A logged in user can upload a podcast
-podCastRouter.post('/upload', checkToken, upload.single('file'), uploadPodcast);
+podCastRouter.post('/upload', checkToken, uploadPodcast);
 
 // only admin can modify podcast
 podCastRouter.patch('/:podcastId', checkToken, verifyAdmin, modifyPodcast);

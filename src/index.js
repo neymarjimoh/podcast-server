@@ -1,11 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
+const multer = require('multer');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./config');
 const authRoutes = require('./routes/auth.route');
 const podcastRoutes = require('./routes/podcast.route');
 const connectDB = require('./config/db');
+const { storage, fileFilter } = require('./helpers/multer');
 
 const app = express();
 
@@ -14,6 +17,11 @@ connectDB();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(multer({
+	storage: storage,
+	fileFilter: fileFilter
+}).single('file')); // added the multer
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use(morgan('dev'));
 app.use(cors());
 
